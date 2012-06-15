@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+'''
+Created on 14 Jun 2012
+
+@author: david
+'''
+
+import sys
+from itertools import chain
+from argparse import ArgumentParser, REMAINDER
+from tracealyze import Log, LogSource
+
+if __name__ == '__main__':
+    parser = ArgumentParser(description='Look for delays.')
+    parser.add_argument('--delta', metavar='TIMEDIFF', type=float, nargs=1, help='Difference', default=[1])
+    parser.add_argument('files', metavar='FILE', type=LogSource, nargs=REMAINDER, help='Trace file', default=[sys.stdin])
+    params = parser.parse_args()
+    
+    last = None
+    
+    for logentry in Log(chain.from_iterable(params.files)):
+        if last is not None and logentry.time-last.time >= params.delta[0]:
+            print last
+            print logentry
+        last = logentry

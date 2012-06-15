@@ -1,0 +1,165 @@
+#!/usr/bin/env python
+'''
+Created on 14 Jun 2012
+
+@author: david
+'''
+
+import sys
+import math
+from collections import OrderedDict
+from itertools import chain
+from argparse import ArgumentParser, REMAINDER
+from tracealyze import LogSource, Log
+
+class Average(object):
+    def __init__(self):
+        self.total = 0.0
+        self.sumofsquares = 0.0
+        self.max = 0.0
+        self.min = None
+        self.count = 0
+    
+    def add(self, num):
+        self.count += 1
+        self.total += num
+        self.sumofsquares += num*num
+        if self.min == None:
+            self.min = num
+        else:
+            self.min = min(self.min, num)
+        self.max = max(self.max, num)
+        
+    @property
+    def mean(self):
+        if self.count == 0:
+            return 0.0
+        else:
+            return self.total/self.count
+    
+    @property
+    def variance(self):
+        if self.count == 0:
+            return 0.0
+        else:
+            return self.sumofsquares / self.count - (self.total / self.count)**2
+    
+    @property
+    def stdev(self):
+        return math.sqrt(self.variance)
+    
+    def __str__(self):
+        if self.min == None:
+            min= 0.0
+        else:
+            min = self.min
+        return 'total {:6.4f} count {:4} mean {:.5f} stdev {:.5f} min {:.5f} max {:.5f}'.format(self.total, self.count, self.mean, self.stdev, min, self.max)
+    
+    def __repr__(self):
+        return str(self.total) + '/' + str(self.count)
+
+if __name__ == '__main__':
+    parser = ArgumentParser(description='Account for where time is being spent.')
+    parser.add_argument('files', metavar='FILE', type=LogSource, nargs=REMAINDER, help='Trace file', default=[sys.stdin])
+    params = parser.parse_args()
+    
+    totalTime = Average()
+    getTime = Average()
+    interTime = Average()
+    updateTime = Average()
+    postTime = Average()
+    
+    quickWriteTime = Average()
+    
+    readTime = Average()
+    
+    trueInterTime = Average()
+    
+    timesets = OrderedDict([
+                ('gaps', OrderedDict([
+                         ('',Average())
+                         ])),
+                ('full writes', OrderedDict([
+                                ('Total duration',Average()),
+                                ('Time for Core to send GetRequest',Average()),
+                                ('Time for DB to send GetResponse',Average()),
+                                ('Time for Core to send UpdateRequest',Average()),
+                                ('Time for DB to send UpdateResponse',Average()),
+                                ('Time for Core to send writeResponse',Average())
+                            ])),
+                ('short writes', OrderedDict([
+                                 ('Total duration',Average()),
+                                 ('Time for Core to send UpdateRequest',Average()),
+                                 ('Time for DB to send UpdateResponse',Average()),
+                                 ('Time for Core to send writeResponse',Average())
+                            ])),
+                ('short reads', OrderedDict([
+                                ('',Average())
+                            ])),
+                ('pings', OrderedDict([
+                          ('',Average())
+                          ]))
+        ])
+    
+    log = Log(chain.from_iterable(params.files))
+    otsgroups = sorted(log.groupByOts(), lambda x,y: cmp(x.earliest().time, y.earliest().time))    
+    for otsgroup in otsgroups:
+        try:
+            assert otsgroup.entries[0].type == 'clientWriteRequest'
+            assert otsgroup.entries[1].type == 'dbGetRequest'
+            assert otsgroup.entries[2].type == 'dbGetResponse'
+            assert otsgroup.entries[3].type == 'dbUpdateRequest'
+            assert otsgroup.entries[4].type == 'dbUpdateResponse'
+            assert otsgroup.entries[5].type == 'clientWriteResponse'
+            timesets['full writes']['Total duration'].add(otsgroup.duration())
+            timesets['full writes']['Time for Core to send GetRequest'].add(otsgroup.entries[1].time - otsgroup.entries[0].time)
+            timesets['full writes']['Time for DB to send GetResponse'].add(otsgroup.entries[2].time - otsgroup.entries[1].time)
+            timesets['full writes']['Time for Core to send UpdateRequest'].add(otsgroup.entries[3].time -otsgroup.entries[2].time)
+            timesets['full writes']['Time for DB to send UpdateResponse'].add(otsgroup.entries[4].time -otsgroup.entries[3].time)
+            timesets['full writes']['Time for Core to send writeResponse'].add(otsgroup.entries[5].time -otsgroup.entries[4].time)
+            continue
+        except:
+            pass
+        try:
+            assert otsgroup.entries[0].type == 'clientWriteRequest'
+            assert otsgroup.entries[1].type == 'dbUpdateRequest'
+            assert otsgroup.entries[2].type == 'dbUpdateResponse'
+            assert otsgroup.entries[3].type == 'clientWriteResponse'
+            timesets['short writes']['Total duration'].add(otsgroup.duration())
+            timesets['short writes']['Time for Core to send UpdateRequest'].add(otsgroup.entries[1].time - otsgroup.entries[0].time)
+            timesets['short writes']['Time for DB to send UpdateResponse'].add(otsgroup.entries[2].time - otsgroup.entries[1].time)
+            timesets['short writes']['Time for Core to send writeResponse'].add(otsgroup.entries[3].time - otsgroup.entries[2].time)
+            continue
+        except:
+            pass
+        try:
+            assert otsgroup.entries[0].type == 'clientReadRequest'
+            assert otsgroup.entries[1].type == 'clientReadResponse'
+            timesets['short reads'][''].add(otsgroup.duration())
+            continue
+        except:
+            pass
+        try:
+            assert otsgroup.entries[0].type == 'pingRequest'
+            assert otsgroup.entries[1].type == 'pingResponse'
+            timesets['pings'][''].add(otsgroup.duration())
+            continue
+        except:
+            pass
+        print "ignoring otsgroup", otsgroup.originatingTs
+    
+    for i in xrange(len(otsgroups)-1):
+        timesets['gaps'][''].add(otsgroups[i+1].earliest().time - otsgroups[i].latest().time)
+    
+    print "Total Observed Log Time"
+    print "======================="
+    print log.duration()
+    
+    for (name, times) in timesets.iteritems():
+        print 
+        print name
+        print '=' * len(name)
+        for (subtitle,ave) in times.iteritems():
+            if subtitle is not '':
+                print subtitle + ':'
+            print '',ave
