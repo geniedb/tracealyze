@@ -13,12 +13,13 @@ from argparse import ArgumentParser, REMAINDER
 from tracealyze import LogSource, Log, EntryGroup
 
 class Average(object):
-    def __init__(self):
+    def __init__(self, name=''):
         self.total = 0.0
         self.sumofsquares = 0.0
         self.max = 0.0
         self.min = None
         self.count = 0
+        self.name = name
     
     def add(self, num):
         self.count += 1
@@ -60,193 +61,37 @@ class Average(object):
 
 if __name__ == '__main__':
     parser = ArgumentParser(description='Account for where time is being spent.')
+    parser.add_argument('--coalesce', help='Coalesce messages of the same type', action='store_true')
     parser.add_argument('files', metavar='FILE', type=LogSource, nargs=REMAINDER, help='Trace file', default=[sys.stdin])
     params = parser.parse_args()
     
-    totalTime = Average()
-    getTime = Average()
-    interTime = Average()
-    updateTime = Average()
-    postTime = Average()
-    
-    quickWriteTime = Average()
-    
-    readTime = Average()
-    
-    trueInterTime = Average()
-    
-    timesets = OrderedDict([
-                ('gaps', OrderedDict([
-                         ('',Average())
-                         ])),
-                ('full writes', OrderedDict([
-                                ('Total duration',Average()),
-                                ('Time for Core to send GetRequest',Average()),
-                                ('Time for DB to send GetResponse',Average()),
-                                ('Time for Core to send UpdateRequest',Average()),
-                                ('Time for DB to send UpdateResponse',Average()),
-                                ('Time for Core to send writeResponse',Average())
-                            ])),
-                ('short writes', OrderedDict([
-                                 ('Total duration',Average()),
-                                 ('Time for Core to send UpdateRequest',Average()),
-                                 ('Time for DB to send UpdateResponse',Average()),
-                                 ('Time for Core to send writeResponse',Average())
-                            ])),
-                ('cached reads', OrderedDict([
-                                ('',Average())
-                            ])),
-                ('PK reads', OrderedDict([
-                                ('Total duration',Average()),
-                                ('Time for Core to send GetRequest',Average()),
-                                ('Time for DB to send GetResponse',Average()),
-                                ('Time for Core to send ReadResponse',Average())
-                            ])),
-                ('Indexed reads', OrderedDict([
-                                ('Total duration',Average()),
-                                ('Time for Core to send GetRequest',Average()),
-                                ('Time for DB to send GetResponse',Average()),
-                                ('Time for Core to send second GetRequest',Average()),
-                                ('Time for DB to send second GetResponse',Average()),
-                                ('Time for Core to send ReadResponse',Average())
-                            ])),
-                ('deletes', OrderedDict([
-                                ('Total duration',Average()),
-                                ('Time for Core to send DeleteRequest',Average()),
-                                ('Time for DB to send DeleteResponse',Average()),
-                                ('Time for Core to send DeleteResponse',Average())
-                            ])),
-                ('Indexed deletes', OrderedDict([
-                                ('Total duration',Average()),
-                                ('Time for Core to send GetRequest',Average()),
-                                ('Time for DB to send GetResponse',Average()),
-                                ('Time for Core to send DeleteRequest',Average()),
-                                ('Time for DB to send DeleteResponse',Average()),
-                                ('Time for Core to send DeleteResponse',Average())
-                            ])),
-                ('pings', OrderedDict([
-                          ('',Average())
-                          ]))
-        ])
+    timesets = {}
     
     log = Log(chain.from_iterable(params.files))
     otsgroups = sorted(log.groupByOts(), lambda x,y: cmp(x.earliest().time, y.earliest().time))    
     for group in otsgroups:
-        # remove index updates
-        otsgroup = EntryGroup([entry for entry in group if entry.type not in ['dbUpdateRequest', 'dbUpdateResponse']
-                               or entry.msg.table.find('$') is -1])
-        otsgroup.originatingTs = group.originatingTs
-        try:
-            assert otsgroup.entries[0].type == 'clientWriteRequest'
-            assert otsgroup.entries[1].type == 'dbGetRequest'
-            assert otsgroup.entries[2].type == 'dbGetResponse'
-            assert otsgroup.entries[3].type == 'dbUpdateRequest'
-            assert otsgroup.entries[4].type == 'dbUpdateResponse'
-            assert otsgroup.entries[5].type == 'clientWriteResponse'
-            timesets['full writes']['Total duration'].add(otsgroup.duration())
-            timesets['full writes']['Time for Core to send GetRequest'].add(otsgroup.entries[1].time - otsgroup.entries[0].time)
-            timesets['full writes']['Time for DB to send GetResponse'].add(otsgroup.entries[2].time - otsgroup.entries[1].time)
-            timesets['full writes']['Time for Core to send UpdateRequests'].add(otsgroup.entries[3].time -otsgroup.entries[2].time)
-            timesets['full writes']['Time for DB to send UpdateResponse'].add(otsgroup.entries[4].time -otsgroup.entries[3].time)
-            timesets['full writes']['Time for Core to send writeResponse'].add(otsgroup.entries[5].time -otsgroup.entries[4].time)
-            continue
-        except:
-            pass
-        try:
-            assert otsgroup.entries[0].type == 'clientWriteRequest'
-            assert otsgroup.entries[1].type == 'dbUpdateRequest'
-            assert otsgroup.entries[2].type == 'dbUpdateResponse'
-            assert otsgroup.entries[3].type == 'clientWriteResponse'
-            timesets['short writes']['Total duration'].add(otsgroup.duration())
-            timesets['short writes']['Time for Core to send UpdateRequest'].add(otsgroup.entries[1].time - otsgroup.entries[0].time)
-            timesets['short writes']['Time for DB to send UpdateResponse'].add(otsgroup.entries[2].time - otsgroup.entries[1].time)
-            timesets['short writes']['Time for Core to send writeResponse'].add(otsgroup.entries[3].time - otsgroup.entries[2].time)
-            continue
-        except:
-            pass
-        try:
-            assert otsgroup.entries[0].type == 'clientReadRequest'
-            assert otsgroup.entries[1].type == 'clientReadResponse'
-            timesets['cached reads'][''].add(otsgroup.duration())
-            continue
-        except:
-            pass
-        try:
-            assert otsgroup.entries[0].type == 'clientReadRequest'
-            assert otsgroup.entries[1].type == 'dbGetRequest'
-            assert otsgroup.entries[2].type == 'dbGetResponse'
-            assert otsgroup.entries[3].type == 'clientReadResponse'
-            timesets['PK reads']['Total duration'].add(otsgroup.duration())
-            timesets['PK reads']['Time for Core to send GetRequest'].add(otsgroup.entries[1].time - otsgroup.entries[0].time)
-            timesets['PK reads']['Time for DB to send GetResponse'].add(otsgroup.entries[2].time - otsgroup.entries[1].time)
-            timesets['PK reads']['Time for Core to send ReadResponse'].add(otsgroup.entries[3].time -otsgroup.entries[2].time)
-            continue
-        except:
-            pass
-        try:
-            assert otsgroup.entries[0].type == 'clientReadRequest'
-            assert otsgroup.entries[1].type == 'dbGetRequest'
-            assert otsgroup.entries[2].type == 'dbGetResponse'
-            assert otsgroup.entries[3].type == 'clientReadResponse'
-            timesets['Indexed reads']['Total duration'].add(otsgroup.duration())
-            timesets['Indexed reads']['Time for Core to send GetRequest'].add(otsgroup.entries[1].time - otsgroup.entries[0].time)
-            timesets['Indexed reads']['Time for DB to send GetResponse'].add(otsgroup.entries[2].time - otsgroup.entries[1].time)
-            timesets['Indexed reads']['Time for Core to send second GetRequest'].add(otsgroup.entries[1].time - otsgroup.entries[0].time)
-            timesets['Indexed reads']['Time for DB to send second GetResponse'].add(otsgroup.entries[2].time - otsgroup.entries[1].time)
-            timesets['Indexed reads']['Time for Core to send ReadResponse'].add(otsgroup.entries[3].time -otsgroup.entries[2].time)
-            continue
-        except:
-            pass
-        try:
-            assert otsgroup.entries[0].type == 'clientDeleteRequest'
-            assert otsgroup.entries[1].type == 'dbDeleteRequest'
-            assert otsgroup.entries[2].type == 'dbDeleteResponse'
-            assert otsgroup.entries[3].type == 'clientDeleteResponse'
-            timesets['deletes']['Total duration'].add(otsgroup.duration())
-            timesets['deletes']['Time for Core to send DeleteRequest'].add(otsgroup.entries[1].time - otsgroup.entries[0].time)
-            timesets['deletes']['Time for DB to send DeleteResponse'].add(otsgroup.entries[2].time - otsgroup.entries[1].time)
-            timesets['deletes']['Time for Core to send DeleteResponse'].add(otsgroup.entries[3].time -otsgroup.entries[2].time)
-            continue
-        except:
-            pass
-        try:
-            assert otsgroup.entries[0].type == 'clientDeleteRequest'
-            assert otsgroup.entries[1].type == 'dbDeleteRequest'
-            assert otsgroup.entries[2].type == 'dbDeleteResponse'
-            assert otsgroup.entries[3].type == 'clientDeleteResponse'
-            timesets['Indexed deletes']['Total duration'].add(otsgroup.duration())
-            timesets['Indexed deletes']['Time for Core to send GetRequest'].add(otsgroup.entries[1].time - otsgroup.entries[0].time)
-            timesets['Indexed deletes']['Time for DB to send GetResponse'].add(otsgroup.entries[2].time - otsgroup.entries[1].time)
-            timesets['Indexed deletes']['Time for Core to send DeleteRequest'].add(otsgroup.entries[1].time - otsgroup.entries[0].time)
-            timesets['Indexed deletes']['Time for DB to send DeleteResponse'].add(otsgroup.entries[2].time - otsgroup.entries[1].time)
-            timesets['Indexed deletes']['Time for Core to send DeleteResponse'].add(otsgroup.entries[3].time -otsgroup.entries[2].time)
-            continue
-        except:
-            pass
-        try:
-            assert otsgroup.entries[0].type == 'pingRequest'
-            assert otsgroup.entries[1].type == 'pingResponse'
-            timesets['pings'][''].add(otsgroup.duration())
-            continue
-        except:
-            pass
-        print "ignoring otsgroup", otsgroup.originatingTs
-        print otsgroup
+        if params.coalesce:
+            group.coalesceByType()
+        grouptype = ' '.join(x.type for x in group)
+        if not timesets.has_key(grouptype):
+            timesets[grouptype] = [Average("Total duration")] + [Average(x.type+" until "+y.type) for (x,y) in zip(group.entries, group.entries[1:])]
+        timesets[grouptype][0].add(group.duration())
+        for i in xrange(len(group.entries)-1):
+            timesets[grouptype][i+1].add(group.entries[i+1].latest().time - group.entries[i].earliest().time)
     
+    timesets['gaps']=[Average()]
     for i in xrange(len(otsgroups)-1):
-        timesets['gaps'][''].add(otsgroups[i+1].earliest().time - otsgroups[i].latest().time)
+        timesets['gaps'][0].add(otsgroups[i+1].earliest().time - otsgroups[i].latest().time)
     
     print "Total Observed Log Time"
     print "======================="
     print log.duration()
     
     for (name, times) in timesets.iteritems():
-        if times.values()[0].count == 0:
-            continue
-        print 
+        print
         print name
         print '=' * len(name)
-        for (subtitle,ave) in times.iteritems():
-            if subtitle is not '':
-                print subtitle + ':'
-            print '',ave
+        for ave in times:
+            if ave.name is not '':
+                print ave.name
+            print '', ave

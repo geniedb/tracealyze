@@ -11,25 +11,24 @@ from google.protobuf import text_format
 class EntryGroup(object):
     def __init__(self, entries):
         self.entries = entries
-    
+
     def earliest(self):
-        return min(self.entries, key=lambda x: x.time)    
-        
+        return min([e.earliest() for e in self.entries], key=lambda x: x.time)
+
     def latest(self):
-        return max(self.entries, key=lambda x: x.time)
-    
+        return max([e.latest() for e in self.entries], key=lambda x: x.time)
+
     def duration(self):
         return self.latest().time - self.earliest().time
 
-class Log(EntryGroup):
-    def __init__(self, source):
-        self.entries = [x for x in source]
+    def __str__(self):
+        return "\n".join([str(entry) for entry in self.entries])
     
     def groupByOts(self):
         groups = {}
         queued = []
         for item in self.entries:
-            if item.msg.table.find('$') is -1 and item.socket != "SUB":
+            if item.socket != "SUB":
                 if not item.msg.HasField('originatingTs'):
                     queued.append(item)
                     continue
@@ -41,9 +40,31 @@ class Log(EntryGroup):
                     queued = []
                     groups[item.msg.originatingTs].originatingTs = item.msg.originatingTs
         return groups.values()
-       
+
+    def coalesceByType(self):
+        entries = []
+        acc = []
+        for entry in self.entries:
+            if len(acc) > 0:
+                if acc[0].type is not entry.type:
+                    if len(acc) > 1:
+                        entries.append(CombinedLogEntry(acc))
+                    else:
+                        entries.append(acc[0])
+                    acc = []
+            acc.append(entry)
+        if len(acc) > 1:
+            entries.append(CombinedLogEntry(acc))
+        elif len(acc) > 0:
+            entries.append(acc[0])
+        self.entries = entries
+
     def __iter__(self):
         return self.entries.__iter__()
+
+class Log(EntryGroup):
+    def __init__(self, source):
+        self.entries = [x for x in source]
 
 class LogSource(object):
     def __init__(self, filename):
@@ -81,10 +102,28 @@ class LogEntry(object):
     def __str__(self):
         return self.logstr
     
+    def earliest(self):
+        return self
+
+    def latest(self):
+        return self
+
     @property
     def type(self):
         return _RAWMSG_MESSAGETYPE.values_by_number[self.msg.type].name
     
     @type.setter
     def type(self, value):
-        self.msg.type = int(value)   
+        self.msg.type = int(value)
+
+class CombinedLogEntry(EntryGroup, LogEntry):
+    def __init__(self, entries):
+        EntryGroup.__init__(self, entries)
+
+    @property
+    def logstr(self):
+        return str(self)
+
+    @property
+    def msg(self):
+        return self.entries[0].msg
