@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+'''
+Created on 14 Jun 2012
+
+@author: david
+'''
+
+import sys
+from itertools import chain
+from argparse import ArgumentParser, REMAINDER
+from tracealyze import Log, LogSource
+
+if __name__ == '__main__':
+    parser = ArgumentParser(description='Find messages with given originating timstamp.')
+    parser.add_argument('ots', metavar='OriginatingTimestamp', type=int, nargs=1, help='Timestamp')
+    parser.add_argument('files', metavar='FILE', type=LogSource, nargs='*', help='Trace file', default=[sys.stdin])
+    params = parser.parse_args()
+
+    last = None
+
+    for otsgroup in Log(chain.from_iterable(params.files)).groupByOts():
+        if otsgroup.originatingTs in params.ots:
+            print otsgroup
+            sys.exit()
