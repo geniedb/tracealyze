@@ -7,6 +7,54 @@ Created on 14 Jun 2012
 
 from message_pb2 import RawMsg, _RAWMSG_MESSAGETYPE
 from google.protobuf import text_format
+import math
+
+class Average(object):
+    def __init__(self, name=''):
+        self.total = 0.0
+        self.sumofsquares = 0.0
+        self.max = 0.0
+        self.min = None
+        self.count = 0
+        self.name = name
+    
+    def add(self, num):
+        self.count += 1
+        self.total += num
+        self.sumofsquares += num*num
+        if self.min == None:
+            self.min = num
+        else:
+            self.min = min(self.min, num)
+        self.max = max(self.max, num)
+        
+    @property
+    def mean(self):
+        if self.count == 0:
+            return 0.0
+        else:
+            return self.total/self.count
+    
+    @property
+    def variance(self):
+        if self.count == 0:
+            return 0.0
+        else:
+            return self.sumofsquares / self.count - (self.total / self.count)**2
+    
+    @property
+    def stdev(self):
+        return math.sqrt(self.variance)
+    
+    def __str__(self):
+        if self.min == None:
+            min= 0.0
+        else:
+            min = self.min
+        return 'total {:6.4f} count {:4} mean {:.5f} stdev {:.5f} min {:.5f} max {:.5f}'.format(self.total, self.count, self.mean, self.stdev, min, self.max)
+    
+    def __repr__(self):
+        return str(self.total) + '/' + str(self.count)
 
 class EntryGroup(object):
     def __init__(self, entries):
