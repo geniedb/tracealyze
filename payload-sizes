@@ -1,0 +1,28 @@
+#!/usr/bin/env python
+'''
+Created on 14 Jun 2012
+
+@author: david
+'''
+
+import sys
+from itertools import chain
+from argparse import ArgumentParser, REMAINDER
+from tracealyze import LogSource, Average
+
+
+
+if __name__ == '__main__':
+    parser = ArgumentParser(description='Print sizes of encoded protobuf packets.')
+    parser.add_argument('--stats', help='Just print summary statistics.', action='store_true')
+    parser.add_argument('files', metavar='FILE', type=LogSource, nargs=REMAINDER, help='Trace file', default=[sys.stdin])
+    params = parser.parse_args()
+    
+    stats = Average()
+    
+    for logentry in chain.from_iterable(params.files):
+        stats.add(len(logentry.msg.SerializeToString()))
+        if not params.stats:
+            print len(logentry.msg.SerializeToString())
+    
+    print stats
