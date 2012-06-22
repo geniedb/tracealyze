@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+'''
+Created on 14 Jun 2012
+
+@author: david
+'''
+
+import sys
+from itertools import chain
+from argparse import ArgumentParser, REMAINDER
+from tracealyze import LogSource
+
+if __name__ == '__main__':
+    parser = ArgumentParser(description='Print time difference between identical messages in two logs.')
+    parser.add_argument('-o', '--originatingTs', metavar='ORIGINATING_TS', type=int, nargs=1)
+    parser.add_argument('-t', '--timestamp', metavar='TS', type=int, nargs=1)
+    parser.add_argument('-d', '--dirn', metavar='DIRN', type=str, nargs=1)
+    parser.add_argument('-s', '--socket', metavar='SOCKET', type=str, nargs=1)
+    parser.add_argument('files', metavar='FILE', type=LogSource, nargs=REMAINDER, help='Trace file', default=[sys.stdin])
+    params = parser.parse_args()
+
+    for logentry in chain.from_iterable(params.files):
+        if (params.originatingTs is None or logentry.msg.originatingTs == params.originatingTs[0]) and \
+           (params.timestamp is None or logentry.msg.ts == params.timestamp[0]) and \
+           (params.dirn is None or logentry.dirn == params.dirn[0]) and \
+           (params.socket is None or logentry.socket == params.socket[0]):
+            print logentry
