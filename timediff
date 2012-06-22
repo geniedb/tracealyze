@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+'''
+Created on 14 Jun 2012
+
+@author: david
+'''
+
+from argparse import ArgumentParser
+from tracealyze import LogSource, Average
+
+if __name__ == '__main__':
+    parser = ArgumentParser(description='Print time difference between identical messages in two logs.')
+    parser.add_argument('first', metavar='FILE_A', type=LogSource, nargs=1, help='Core trace file')
+    parser.add_argument('second', metavar='FILE_B', type=LogSource, nargs=1, help='Libcloudfabric trace file')
+    params = parser.parse_args()
+
+    # # O(n^2) but who cares 
+    # print [abs(x.time-y.time) for x in params.first[0] for y in params.second[0] if x.msg.ts == y.msg.ts]
+    
+    # Assumes in order
+    first = (x for x in params.first[0] if x.socket == 'CLIENT')
+    second = (x for x in params.first[0] if x.socket == 'CLIENT')
+    
+    ave = Average()
+    
+    for time in (abs(a.time-b.time) for (a,b) in zip(first, second)):
+        ave.add(time)
+    
+    print ave
