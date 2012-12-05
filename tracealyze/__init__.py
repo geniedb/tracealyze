@@ -139,6 +139,9 @@ class LogEntry(object):
         if logstr.startswith("# time: "):
             (self.time,sep,logstr) = logstr.partition("\n")
             self.time = float(self.time[8:])
+        if logstr.startswith("# Originating Node: "):
+            (ignore,sep,logstr) = logstr.partition("\n")
+        (logstr, sep, ignore) = logstr.partition("data:")
         (self.dirn,sep,logstr) = logstr.partition("\t")
         (self.socket, sep, logstr) = logstr.partition("\t")
         self.msg = RawMsg()
