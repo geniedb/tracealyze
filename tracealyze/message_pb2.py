@@ -7,11 +7,10 @@ from google.protobuf import descriptor_pb2
 # @@protoc_insertion_point(imports)
 
 
-
 DESCRIPTOR = descriptor.FileDescriptor(
   name='message.proto',
   package='protobuf',
-  serialized_pb='\n\rmessage.proto\x12\x08protobuf\"\xb0\x01\n\x06Record\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\x12\r\n\x05orgId\x18\x02 \x01(\x05\x12\x14\n\x0c\x64\x61tabaseName\x18\x03 \x01(\t\x12\x11\n\ttableName\x18\x04 \x01(\t\x12&\n\x06\x66ields\x18\x05 \x03(\x0b\x32\x16.protobuf.Record.Field\x1a\x38\n\x05\x46ield\x12\x11\n\tfieldName\x18\x01 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c\x12\x0e\n\x06isNull\x18\x03 \x01(\x08\"\xbb\r\n\x06RawMsg\x12*\n\x04type\x18\x01 \x02(\x0e\x32\x1c.protobuf.RawMsg.MessageType\x12\x10\n\x08\x64\x61tabase\x18\x02 \x01(\t\x12\r\n\x05table\x18\x03 \x01(\t\x12\x0b\n\x03key\x18\x04 \x01(\x0c\x12\x0c\n\x04\x64\x61ta\x18\x05 \x01(\x0c\x12\n\n\x02ts\x18\x06 \x01(\x04\x12\x15\n\roriginatingTs\x18\x07 \x01(\x04\x12;\n\x10\x63onsistencyLevel\x18\x08 \x01(\x0e\x32!.protobuf.RawMsg.ConsistencyLevel\x12\'\n\x06result\x18\t \x01(\x0e\x32\x17.protobuf.RawMsg.Result\x12\x10\n\x08\x63lientID\x18\n \x01(\x0c\x12\r\n\x05index\x18\x0b \x01(\t\x12+\n\x08operator\x18\x0c \x01(\x0e\x32\x19.protobuf.RawMsg.Operator\x12+\n\x08tiebreak\x18\r \x01(\x0e\x32\x19.protobuf.RawMsg.Tiebreak\"\xfd\x05\n\x0bMessageType\x12\t\n\x05\x61\x64min\x10\x00\x12\x12\n\x0e\x64\x61\x65monStopping\x10\x01\x12\x11\n\radminResponse\x10\x02\x12\t\n\x05\x65mpty\x10\x03\x12\x15\n\x11\x63lientReadRequest\x10\x04\x12\x16\n\x12\x63lientReadResponse\x10\x05\x12\x16\n\x12\x63lientWriteRequest\x10\x06\x12\x17\n\x13\x63lientWriteResponse\x10\x07\x12\x17\n\x13\x63lientDeleteRequest\x10\x08\x12\x18\n\x14\x63lientDeleteResponse\x10\t\x12\x1a\n\x16\x63onsistencyReadRequest\x10\n\x12\x1b\n\x17\x63onsistencyReadResponse\x10\x0b\x12\x1b\n\x17\x63onsistencyWriteRequest\x10\x0c\x12\x1c\n\x18\x63onsistencyWriteResponse\x10\r\x12\t\n\x05timer\x10\x0e\x12\x0b\n\x07timeout\x10\x0f\x12\r\n\theartbeat\x10\x10\x12\x07\n\x03log\x10\x11\x12\x16\n\x12\x64\x61\x65monStopResponse\x10\x12\x12\x14\n\x10logLevelResponse\x10\x13\x12\x15\n\x11writeNotification\x10\x15\x12\x10\n\x0c\x64\x62GetRequest\x10\x1d\x12\x11\n\rdbGetResponse\x10\x1e\x12\x13\n\x0f\x64\x62UpdateRequest\x10\x1f\x12\x14\n\x10\x64\x62UpdateResponse\x10 \x12\x18\n\x14\x64\x62RecordCountRequest\x10!\x12\x19\n\x15\x64\x62RecordCountResponse\x10\"\x12\x13\n\x0f\x64\x62\x44\x65leteRequest\x10#\x12\x14\n\x10\x64\x62\x44\x65leteResponse\x10$\x12\x1c\n\x18\x63lientRecordCountRequest\x10%\x12\x1d\n\x19\x63lientRecordCountResponse\x10&\x12\x11\n\rexportRequest\x10\'\x12\x12\n\x0e\x65xportFinished\x10(\x12\x0f\n\x0bpingRequest\x10)\x12\x10\n\x0cpingResponse\x10*\"h\n\x10\x43onsistencyLevel\x12\x19\n\x15unsetConsistencyLevel\x10\x00\x12\x10\n\x0cinconsistent\x10\x01\x12\t\n\x05local\x10\x02\x12\x07\n\x03lan\x10\x03\x12\x07\n\x03wan\x10\x04\x12\n\n\x06quorum\x10\x05\"\xe5\x02\n\x06Result\x12\x0f\n\x0bunsetResult\x10\x00\x12\x0b\n\x07success\x10\x01\x12\x14\n\x10\x64\x61tabaseNotFound\x10\x02\x12\x11\n\rtableNotFound\x10\x03\x12\x0f\n\x0bkeyNotFound\x10\x04\x12\t\n\x05\x65rror\x10\x05\x12\x17\n\x13\x64\x61tabaseNotProvided\x10\x06\x12\x14\n\x10tableNotProvided\x10\x07\x12\x12\n\x0ekeyNotProvided\x10\x08\x12\x0e\n\ndataIsNull\x10\t\x12\x16\n\x12tableAlreadyExists\x10\n\x12\x0e\n\nbadRequest\x10\x0b\x12\x19\n\x15\x64\x61tabaseAlreadyExists\x10\x0c\x12\x16\n\x12indexAlreadyExists\x10\r\x12\x11\n\rindexNotFound\x10\x0e\x12\x1d\n\x19nonNullableIndexViolation\x10\x0f\x12\x18\n\x14uniqueIndexViolation\x10\x10\"M\n\x08Operator\x12\t\n\x05\x65qual\x10\x01\x12\x08\n\x04less\x10\x02\x12\r\n\tlessEqual\x10\x03\x12\x0b\n\x07greater\x10\x04\x12\x10\n\x0cgreaterEqual\x10\x05\"$\n\x08Tiebreak\x12\x0b\n\x07minimum\x10\x01\x12\x0b\n\x07maximum\x10\x02')
+  serialized_pb='\n\rmessage.proto\x12\x08protobuf\",\n\tKeyRecord\x12\x0b\n\x03key\x18\x01 \x01(\x0c\x12\x12\n\nrecordData\x18\x02 \x01(\x0c\"\xd6\x11\n\x06RawMsg\x12*\n\x04type\x18\x01 \x02(\x0e\x32\x1c.protobuf.RawMsg.MessageType\x12\x10\n\x08\x64\x61tabase\x18\x02 \x01(\t\x12\r\n\x05table\x18\x03 \x01(\t\x12\x0b\n\x03key\x18\x04 \x01(\x0c\x12\n\n\x02ts\x18\x06 \x01(\x04\x12\x15\n\roriginatingTs\x18\x07 \x01(\x04\x12;\n\x10\x63onsistencyLevel\x18\x08 \x01(\x0e\x32!.protobuf.RawMsg.ConsistencyLevel\x12\'\n\x06result\x18\t \x01(\x0e\x32\x17.protobuf.RawMsg.Result\x12\x10\n\x08\x63lientID\x18\n \x01(\x0c\x12\r\n\x05index\x18\x0b \x01(\t\x12+\n\x08operator\x18\x0c \x01(\x0e\x32\x19.protobuf.RawMsg.Operator\x12+\n\x08tiebreak\x18\r \x01(\x0e\x32\x19.protobuf.RawMsg.Tiebreak\x12\x15\n\risBulkRequest\x18\x0e \x01(\x08\x12\x10\n\x08isInsert\x18\x10 \x01(\x08\x12\x13\n\x0bupdateCount\x18\x11 \x01(\x04\x12\x17\n\x0fnextUpdateCount\x18\x12 \x01(\x04\"\xaf\t\n\x0bMessageType\x12\t\n\x05\x61\x64min\x10\x00\x12\x12\n\x0e\x64\x61\x65monStopping\x10\x01\x12\x11\n\radminResponse\x10\x02\x12\t\n\x05\x65mpty\x10\x03\x12\x15\n\x11\x63lientReadRequest\x10\x04\x12\x16\n\x12\x63lientReadResponse\x10\x05\x12\x16\n\x12\x63lientWriteRequest\x10\x06\x12\x17\n\x13\x63lientWriteResponse\x10\x07\x12\x17\n\x13\x63lientDeleteRequest\x10\x08\x12\x18\n\x14\x63lientDeleteResponse\x10\t\x12\x1a\n\x16\x63onsistencyReadRequest\x10\n\x12\x1b\n\x17\x63onsistencyReadResponse\x10\x0b\x12\x1b\n\x17\x63onsistencyWriteRequest\x10\x0c\x12\x1c\n\x18\x63onsistencyWriteResponse\x10\r\x12\t\n\x05timer\x10\x0e\x12\x0b\n\x07timeout\x10\x0f\x12\r\n\theartbeat\x10\x10\x12\x07\n\x03log\x10\x11\x12\x16\n\x12\x64\x61\x65monStopResponse\x10\x12\x12\x14\n\x10logLevelResponse\x10\x13\x12\x15\n\x11writeNotification\x10\x15\x12\x16\n\x12\x64\x65leteNotification\x10\x16\x12\x1a\n\x16\x64\x62GetNodeStatusRequest\x10\x19\x12\x1b\n\x17\x64\x62GetNodeStatusResponse\x10\x1a\x12\x14\n\x10\x64\x62LogReadRequest\x10\x1b\x12\x15\n\x11\x64\x62LogReadResponse\x10\x1c\x12\x10\n\x0c\x64\x62GetRequest\x10\x1d\x12\x11\n\rdbGetResponse\x10\x1e\x12\x13\n\x0f\x64\x62UpdateRequest\x10\x1f\x12\x14\n\x10\x64\x62UpdateResponse\x10 \x12\x18\n\x14\x64\x62RecordCountRequest\x10!\x12\x19\n\x15\x64\x62RecordCountResponse\x10\"\x12\x13\n\x0f\x64\x62\x44\x65leteRequest\x10#\x12\x14\n\x10\x64\x62\x44\x65leteResponse\x10$\x12\x1c\n\x18\x63lientRecordCountRequest\x10%\x12\x1d\n\x19\x63lientRecordCountResponse\x10&\x12\x11\n\rexportRequest\x10\'\x12\x12\n\x0e\x65xportFinished\x10(\x12\x0f\n\x0bpingRequest\x10)\x12\x10\n\x0cpingResponse\x10*\x12\x1f\n\x1b\x64\x62GetLatestTimestampRequest\x10+\x12 \n\x1c\x64\x62GetLatestTimestampResponse\x10,\x12\x16\n\x12\x64isableKeysRequest\x10-\x12\x17\n\x13\x64isableKeysResponse\x10.\x12\x15\n\x11\x65nableKeysRequest\x10/\x12\x16\n\x12\x65nableKeysResponse\x10\x30\x12\x1a\n\x16\x65nableKeysNotification\x10\x31\x12\x1b\n\x17\x64isableKeysNotification\x10\x32\x12\x11\n\rstatusRequest\x10\x33\x12\x12\n\x0estatusResponse\x10\x34\x12\x16\n\x12\x64\x61\x65monAdminRequest\x10\x35\x12\x17\n\x13\x64\x61\x65monAdminResponse\x10\x36\"h\n\x10\x43onsistencyLevel\x12\x19\n\x15unsetConsistencyLevel\x10\x00\x12\x10\n\x0cinconsistent\x10\x01\x12\t\n\x05local\x10\x02\x12\x07\n\x03lan\x10\x03\x12\x07\n\x03wan\x10\x04\x12\n\n\x06quorum\x10\x05\"\x85\x03\n\x06Result\x12\x0f\n\x0bunsetResult\x10\x00\x12\x0b\n\x07success\x10\x01\x12\x14\n\x10\x64\x61tabaseNotFound\x10\x02\x12\x11\n\rtableNotFound\x10\x03\x12\x0f\n\x0bkeyNotFound\x10\x04\x12\t\n\x05\x65rror\x10\x05\x12\x17\n\x13\x64\x61tabaseNotProvided\x10\x06\x12\x14\n\x10tableNotProvided\x10\x07\x12\x12\n\x0ekeyNotProvided\x10\x08\x12\x0e\n\ndataIsNull\x10\t\x12\x16\n\x12tableAlreadyExists\x10\n\x12\x0e\n\nbadRequest\x10\x0b\x12\x19\n\x15\x64\x61tabaseAlreadyExists\x10\x0c\x12\x16\n\x12indexAlreadyExists\x10\r\x12\x11\n\rindexNotFound\x10\x0e\x12\x1d\n\x19nonNullableIndexViolation\x10\x0f\x12\x18\n\x14uniqueIndexViolation\x10\x10\x12\x14\n\x10keyAlreadyExists\x10\x11\x12\x08\n\x04noOp\x10\x12\"M\n\x08Operator\x12\t\n\x05\x65qual\x10\x01\x12\x08\n\x04less\x10\x02\x12\r\n\tlessEqual\x10\x03\x12\x0b\n\x07greater\x10\x04\x12\x10\n\x0cgreaterEqual\x10\x05\"$\n\x08Tiebreak\x12\x0b\n\x07minimum\x10\x01\x12\x0b\n\x07maximum\x10\x02\"\x8f\x02\n\x06\x44\x44LMsg\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x1f\n\x06\x66ields\x18\x02 \x03(\x0b\x32\x0f.protobuf.Field\x12 \n\x07indexes\x18\x03 \x03(\x0b\x32\x0f.protobuf.Index\x12\x15\n\rnullByteCount\x18\x04 \x01(\r\x12\x1a\n\x12maxSQLBufferLength\x18\x05 \x01(\r\x12\x17\n\x0fprimaryKeyIndex\x18\x06 \x01(\x05\x12\x17\n\x0f\x63reateStatement\x18\x07 \x01(\t\x12\x16\n\x0e\x61reKeysEnabled\x18\x08 \x01(\x08\x12\x19\n\x11\x61utoIncrementBase\x18\t \x01(\x04\x12\x1c\n\x14\x61utoIncrementFieldID\x18\n \x01(\r\"\xa5\x05\n\x05\x46ield\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\'\n\x04type\x18\x02 \x01(\x0e\x32\x19.protobuf.Field.FieldType\x12\x12\n\nisNullable\x18\x03 \x01(\x08\x12\x0f\n\x07nullBit\x18\x04 \x01(\x04\x12\x16\n\x0enullByteOffset\x18\x05 \x01(\x04\x12\x16\n\x0enumLengthBytes\x18\x06 \x01(\x04\x12\x12\n\npackLength\x18\x07 \x01(\x04\x12\x13\n\x0b\x66ieldLength\x18\x08 \x01(\x04\x12\x12\n\nisUnsigned\x18\t \x01(\x08\x12\x0e\n\x06isEnum\x18\n \x01(\x08\x12\x0e\n\x06isASet\x18\x0b \x01(\x08\x12\r\n\x05index\x18\x0c \x01(\x04\x12\x10\n\x08isUnique\x18\r \x01(\x08\"\x91\x03\n\tFieldType\x12\r\n\tDTDecimal\x10\x01\x12\n\n\x06\x44TTiny\x10\x02\x12\x0b\n\x07\x44TShort\x10\x03\x12\n\n\x06\x44TLong\x10\x04\x12\x0b\n\x07\x44TFloat\x10\x05\x12\x0c\n\x08\x44TDouble\x10\x06\x12\n\n\x06\x44TNull\x10\x07\x12\x0f\n\x0b\x44TTimestamp\x10\x08\x12\x0e\n\nDTLongLong\x10\t\x12\x0b\n\x07\x44TInt24\x10\n\x12\n\n\x06\x44TDate\x10\x0b\x12\n\n\x06\x44TTime\x10\x0c\x12\x0e\n\nDTDateTime\x10\r\x12\n\n\x06\x44TYear\x10\x0e\x12\r\n\tDTNewDate\x10\x0f\x12\r\n\tDTVarChar\x10\x10\x12\t\n\x05\x44TBit\x10\x11\x12\x11\n\x0c\x44TNewDecimal\x10\xf6\x01\x12\x0b\n\x06\x44TEnum\x10\xf7\x01\x12\n\n\x05\x44TSet\x10\xf8\x01\x12\x0f\n\nDTTinyBlob\x10\xf9\x01\x12\x11\n\x0c\x44TMediumBlob\x10\xfa\x01\x12\x0f\n\nDTLongBlob\x10\xfb\x01\x12\x0b\n\x06\x44TBlob\x10\xfc\x01\x12\x10\n\x0b\x44TVarString\x10\xfd\x01\x12\r\n\x08\x44TString\x10\xfe\x01\x12\x0f\n\nDTGeometry\x10\xff\x01\"\xad\x01\n\x05Index\x12\x12\n\nfieldCount\x18\x01 \x01(\x04\x12\x14\n\x0cindexFieldID\x18\x02 \x03(\x04\x12\x11\n\tindexName\x18\x03 \x01(\t\x12\x10\n\x08isUnique\x18\x04 \x01(\x08\x12\x11\n\tisPrimary\x18\x05 \x01(\x08\x12\x19\n\x11hasNullableFields\x18\x06 \x01(\x08\x12\r\n\x05index\x18\x07 \x01(\x04\x12\x18\n\x10\x62lobFieldLengths\x18\x08 \x03(\r')
 
 
 
@@ -106,66 +105,134 @@ _RAWMSG_MESSAGETYPE = descriptor.EnumDescriptor(
       options=None,
       type=None),
     descriptor.EnumValueDescriptor(
-      name='dbGetRequest', index=21, number=29,
+      name='deleteNotification', index=21, number=22,
       options=None,
       type=None),
     descriptor.EnumValueDescriptor(
-      name='dbGetResponse', index=22, number=30,
+      name='dbGetNodeStatusRequest', index=22, number=25,
       options=None,
       type=None),
     descriptor.EnumValueDescriptor(
-      name='dbUpdateRequest', index=23, number=31,
+      name='dbGetNodeStatusResponse', index=23, number=26,
       options=None,
       type=None),
     descriptor.EnumValueDescriptor(
-      name='dbUpdateResponse', index=24, number=32,
+      name='dbLogReadRequest', index=24, number=27,
       options=None,
       type=None),
     descriptor.EnumValueDescriptor(
-      name='dbRecordCountRequest', index=25, number=33,
+      name='dbLogReadResponse', index=25, number=28,
       options=None,
       type=None),
     descriptor.EnumValueDescriptor(
-      name='dbRecordCountResponse', index=26, number=34,
+      name='dbGetRequest', index=26, number=29,
       options=None,
       type=None),
     descriptor.EnumValueDescriptor(
-      name='dbDeleteRequest', index=27, number=35,
+      name='dbGetResponse', index=27, number=30,
       options=None,
       type=None),
     descriptor.EnumValueDescriptor(
-      name='dbDeleteResponse', index=28, number=36,
+      name='dbUpdateRequest', index=28, number=31,
       options=None,
       type=None),
     descriptor.EnumValueDescriptor(
-      name='clientRecordCountRequest', index=29, number=37,
+      name='dbUpdateResponse', index=29, number=32,
       options=None,
       type=None),
     descriptor.EnumValueDescriptor(
-      name='clientRecordCountResponse', index=30, number=38,
+      name='dbRecordCountRequest', index=30, number=33,
       options=None,
       type=None),
     descriptor.EnumValueDescriptor(
-      name='exportRequest', index=31, number=39,
+      name='dbRecordCountResponse', index=31, number=34,
       options=None,
       type=None),
     descriptor.EnumValueDescriptor(
-      name='exportFinished', index=32, number=40,
+      name='dbDeleteRequest', index=32, number=35,
       options=None,
       type=None),
     descriptor.EnumValueDescriptor(
-      name='pingRequest', index=33, number=41,
+      name='dbDeleteResponse', index=33, number=36,
       options=None,
       type=None),
     descriptor.EnumValueDescriptor(
-      name='pingResponse', index=34, number=42,
+      name='clientRecordCountRequest', index=34, number=37,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='clientRecordCountResponse', index=35, number=38,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='exportRequest', index=36, number=39,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='exportFinished', index=37, number=40,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='pingRequest', index=38, number=41,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='pingResponse', index=39, number=42,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='dbGetLatestTimestampRequest', index=40, number=43,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='dbGetLatestTimestampResponse', index=41, number=44,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='disableKeysRequest', index=42, number=45,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='disableKeysResponse', index=43, number=46,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='enableKeysRequest', index=44, number=47,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='enableKeysResponse', index=45, number=48,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='enableKeysNotification', index=46, number=49,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='disableKeysNotification', index=47, number=50,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='statusRequest', index=48, number=51,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='statusResponse', index=49, number=52,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='daemonAdminRequest', index=50, number=53,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='daemonAdminResponse', index=51, number=54,
       options=None,
       type=None),
   ],
   containing_type=None,
   options=None,
-  serialized_start=582,
-  serialized_end=1347,
+  serialized_start=522,
+  serialized_end=1721,
 )
 
 _RAWMSG_CONSISTENCYLEVEL = descriptor.EnumDescriptor(
@@ -201,8 +268,8 @@ _RAWMSG_CONSISTENCYLEVEL = descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=1349,
-  serialized_end=1453,
+  serialized_start=1723,
+  serialized_end=1827,
 )
 
 _RAWMSG_RESULT = descriptor.EnumDescriptor(
@@ -279,11 +346,19 @@ _RAWMSG_RESULT = descriptor.EnumDescriptor(
       name='uniqueIndexViolation', index=16, number=16,
       options=None,
       type=None),
+    descriptor.EnumValueDescriptor(
+      name='keyAlreadyExists', index=17, number=17,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='noOp', index=18, number=18,
+      options=None,
+      type=None),
   ],
   containing_type=None,
   options=None,
-  serialized_start=1456,
-  serialized_end=1813,
+  serialized_start=1830,
+  serialized_end=2219,
 )
 
 _RAWMSG_OPERATOR = descriptor.EnumDescriptor(
@@ -315,8 +390,8 @@ _RAWMSG_OPERATOR = descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=1815,
-  serialized_end=1892,
+  serialized_start=2221,
+  serialized_end=2298,
 )
 
 _RAWMSG_TIEBREAK = descriptor.EnumDescriptor(
@@ -336,36 +411,150 @@ _RAWMSG_TIEBREAK = descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=1894,
-  serialized_end=1930,
+  serialized_start=2300,
+  serialized_end=2336,
+)
+
+_FIELD_FIELDTYPE = descriptor.EnumDescriptor(
+  name='FieldType',
+  full_name='protobuf.Field.FieldType',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    descriptor.EnumValueDescriptor(
+      name='DTDecimal', index=0, number=1,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTTiny', index=1, number=2,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTShort', index=2, number=3,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTLong', index=3, number=4,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTFloat', index=4, number=5,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTDouble', index=5, number=6,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTNull', index=6, number=7,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTTimestamp', index=7, number=8,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTLongLong', index=8, number=9,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTInt24', index=9, number=10,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTDate', index=10, number=11,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTTime', index=11, number=12,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTDateTime', index=12, number=13,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTYear', index=13, number=14,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTNewDate', index=14, number=15,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTVarChar', index=15, number=16,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTBit', index=16, number=17,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTNewDecimal', index=17, number=246,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTEnum', index=18, number=247,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTSet', index=19, number=248,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTTinyBlob', index=20, number=249,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTMediumBlob', index=21, number=250,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTLongBlob', index=22, number=251,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTBlob', index=23, number=252,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTVarString', index=24, number=253,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTString', index=25, number=254,
+      options=None,
+      type=None),
+    descriptor.EnumValueDescriptor(
+      name='DTGeometry', index=26, number=255,
+      options=None,
+      type=None),
+  ],
+  containing_type=None,
+  options=None,
+  serialized_start=2889,
+  serialized_end=3290,
 )
 
 
-_RECORD_FIELD = descriptor.Descriptor(
-  name='Field',
-  full_name='protobuf.Record.Field',
+_KEYRECORD = descriptor.Descriptor(
+  name='KeyRecord',
+  full_name='protobuf.KeyRecord',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='fieldName', full_name='protobuf.Record.Field.fieldName', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    descriptor.FieldDescriptor(
-      name='data', full_name='protobuf.Record.Field.data', index=1,
-      number=2, type=12, cpp_type=9, label=1,
+      name='key', full_name='protobuf.KeyRecord.key', index=0,
+      number=1, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='isNull', full_name='protobuf.Record.Field.isNull', index=2,
-      number=3, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
+      name='recordData', full_name='protobuf.KeyRecord.recordData', index=1,
+      number=2, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -378,63 +567,8 @@ _RECORD_FIELD = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=148,
-  serialized_end=204,
-)
-
-_RECORD = descriptor.Descriptor(
-  name='Record',
-  full_name='protobuf.Record',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    descriptor.FieldDescriptor(
-      name='data', full_name='protobuf.Record.data', index=0,
-      number=1, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value="",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    descriptor.FieldDescriptor(
-      name='orgId', full_name='protobuf.Record.orgId', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    descriptor.FieldDescriptor(
-      name='databaseName', full_name='protobuf.Record.databaseName', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    descriptor.FieldDescriptor(
-      name='tableName', full_name='protobuf.Record.tableName', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    descriptor.FieldDescriptor(
-      name='fields', full_name='protobuf.Record.fields', index=4,
-      number=5, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[_RECORD_FIELD, ],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  extension_ranges=[],
-  serialized_start=28,
-  serialized_end=204,
+  serialized_start=27,
+  serialized_end=71,
 )
 
 
@@ -474,65 +608,86 @@ _RAWMSG = descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='data', full_name='protobuf.RawMsg.data', index=4,
-      number=5, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value="",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    descriptor.FieldDescriptor(
-      name='ts', full_name='protobuf.RawMsg.ts', index=5,
+      name='ts', full_name='protobuf.RawMsg.ts', index=4,
       number=6, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='originatingTs', full_name='protobuf.RawMsg.originatingTs', index=6,
+      name='originatingTs', full_name='protobuf.RawMsg.originatingTs', index=5,
       number=7, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='consistencyLevel', full_name='protobuf.RawMsg.consistencyLevel', index=7,
+      name='consistencyLevel', full_name='protobuf.RawMsg.consistencyLevel', index=6,
       number=8, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='result', full_name='protobuf.RawMsg.result', index=8,
+      name='result', full_name='protobuf.RawMsg.result', index=7,
       number=9, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='clientID', full_name='protobuf.RawMsg.clientID', index=9,
+      name='clientID', full_name='protobuf.RawMsg.clientID', index=8,
       number=10, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='index', full_name='protobuf.RawMsg.index', index=10,
+      name='index', full_name='protobuf.RawMsg.index', index=9,
       number=11, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=unicode("", "utf-8"),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='operator', full_name='protobuf.RawMsg.operator', index=11,
+      name='operator', full_name='protobuf.RawMsg.operator', index=10,
       number=12, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=1,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='tiebreak', full_name='protobuf.RawMsg.tiebreak', index=12,
+      name='tiebreak', full_name='protobuf.RawMsg.tiebreak', index=11,
       number=13, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=1,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='isBulkRequest', full_name='protobuf.RawMsg.isBulkRequest', index=12,
+      number=14, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='isInsert', full_name='protobuf.RawMsg.isInsert', index=13,
+      number=16, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='updateCount', full_name='protobuf.RawMsg.updateCount', index=14,
+      number=17, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='nextUpdateCount', full_name='protobuf.RawMsg.nextUpdateCount', index=15,
+      number=18, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -550,12 +705,292 @@ _RAWMSG = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=207,
-  serialized_end=1930,
+  serialized_start=74,
+  serialized_end=2336,
 )
 
-_RECORD_FIELD.containing_type = _RECORD;
-_RECORD.fields_by_name['fields'].message_type = _RECORD_FIELD
+
+_DDLMSG = descriptor.Descriptor(
+  name='DDLMsg',
+  full_name='protobuf.DDLMsg',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='name', full_name='protobuf.DDLMsg.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='fields', full_name='protobuf.DDLMsg.fields', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='indexes', full_name='protobuf.DDLMsg.indexes', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='nullByteCount', full_name='protobuf.DDLMsg.nullByteCount', index=3,
+      number=4, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='maxSQLBufferLength', full_name='protobuf.DDLMsg.maxSQLBufferLength', index=4,
+      number=5, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='primaryKeyIndex', full_name='protobuf.DDLMsg.primaryKeyIndex', index=5,
+      number=6, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='createStatement', full_name='protobuf.DDLMsg.createStatement', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='areKeysEnabled', full_name='protobuf.DDLMsg.areKeysEnabled', index=7,
+      number=8, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='autoIncrementBase', full_name='protobuf.DDLMsg.autoIncrementBase', index=8,
+      number=9, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='autoIncrementFieldID', full_name='protobuf.DDLMsg.autoIncrementFieldID', index=9,
+      number=10, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=2339,
+  serialized_end=2610,
+)
+
+
+_FIELD = descriptor.Descriptor(
+  name='Field',
+  full_name='protobuf.Field',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='name', full_name='protobuf.Field.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='type', full_name='protobuf.Field.type', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=1,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='isNullable', full_name='protobuf.Field.isNullable', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='nullBit', full_name='protobuf.Field.nullBit', index=3,
+      number=4, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='nullByteOffset', full_name='protobuf.Field.nullByteOffset', index=4,
+      number=5, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='numLengthBytes', full_name='protobuf.Field.numLengthBytes', index=5,
+      number=6, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='packLength', full_name='protobuf.Field.packLength', index=6,
+      number=7, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='fieldLength', full_name='protobuf.Field.fieldLength', index=7,
+      number=8, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='isUnsigned', full_name='protobuf.Field.isUnsigned', index=8,
+      number=9, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='isEnum', full_name='protobuf.Field.isEnum', index=9,
+      number=10, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='isASet', full_name='protobuf.Field.isASet', index=10,
+      number=11, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='index', full_name='protobuf.Field.index', index=11,
+      number=12, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='isUnique', full_name='protobuf.Field.isUnique', index=12,
+      number=13, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+    _FIELD_FIELDTYPE,
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=2613,
+  serialized_end=3290,
+)
+
+
+_INDEX = descriptor.Descriptor(
+  name='Index',
+  full_name='protobuf.Index',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='fieldCount', full_name='protobuf.Index.fieldCount', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='indexFieldID', full_name='protobuf.Index.indexFieldID', index=1,
+      number=2, type=4, cpp_type=4, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='indexName', full_name='protobuf.Index.indexName', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='isUnique', full_name='protobuf.Index.isUnique', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='isPrimary', full_name='protobuf.Index.isPrimary', index=4,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='hasNullableFields', full_name='protobuf.Index.hasNullableFields', index=5,
+      number=6, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='index', full_name='protobuf.Index.index', index=6,
+      number=7, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='blobFieldLengths', full_name='protobuf.Index.blobFieldLengths', index=7,
+      number=8, type=13, cpp_type=3, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=3293,
+  serialized_end=3466,
+)
+
+
 _RAWMSG.fields_by_name['type'].enum_type = _RAWMSG_MESSAGETYPE
 _RAWMSG.fields_by_name['consistencyLevel'].enum_type = _RAWMSG_CONSISTENCYLEVEL
 _RAWMSG.fields_by_name['result'].enum_type = _RAWMSG_RESULT
@@ -566,25 +1001,39 @@ _RAWMSG_CONSISTENCYLEVEL.containing_type = _RAWMSG;
 _RAWMSG_RESULT.containing_type = _RAWMSG;
 _RAWMSG_OPERATOR.containing_type = _RAWMSG;
 _RAWMSG_TIEBREAK.containing_type = _RAWMSG;
-DESCRIPTOR.message_types_by_name['Record'] = _RECORD
-DESCRIPTOR.message_types_by_name['RawMsg'] = _RAWMSG
+_DDLMSG.fields_by_name['fields'].message_type = _FIELD
+_DDLMSG.fields_by_name['indexes'].message_type = _INDEX
+_FIELD.fields_by_name['type'].enum_type = _FIELD_FIELDTYPE
+_FIELD_FIELDTYPE.containing_type = _FIELD;
 
-class Record(message.Message):
+class KeyRecord(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _KEYRECORD
   
-  class Field(message.Message):
-    __metaclass__ = reflection.GeneratedProtocolMessageType
-    DESCRIPTOR = _RECORD_FIELD
-    
-    # @@protoc_insertion_point(class_scope:protobuf.Record.Field)
-  DESCRIPTOR = _RECORD
-  
-  # @@protoc_insertion_point(class_scope:protobuf.Record)
+  # @@protoc_insertion_point(class_scope:protobuf.KeyRecord)
 
 class RawMsg(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _RAWMSG
   
   # @@protoc_insertion_point(class_scope:protobuf.RawMsg)
+
+class DDLMsg(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _DDLMSG
+  
+  # @@protoc_insertion_point(class_scope:protobuf.DDLMsg)
+
+class Field(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _FIELD
+  
+  # @@protoc_insertion_point(class_scope:protobuf.Field)
+
+class Index(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _INDEX
+  
+  # @@protoc_insertion_point(class_scope:protobuf.Index)
 
 # @@protoc_insertion_point(module_scope)
